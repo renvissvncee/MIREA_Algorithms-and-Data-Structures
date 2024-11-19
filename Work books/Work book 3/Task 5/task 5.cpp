@@ -6,7 +6,8 @@ std::string remove(const std::string& num) {
     std::string str;
     bool flag = 0;
     for (int i = 0; i < num.length(); i++) {
-        if (flag == 1) {
+        if (flag == 1) 
+        {
             str = str + num[i];
         }
         if (num[i] != '0' && flag == 0) {

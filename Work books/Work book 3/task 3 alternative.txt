@@ -1,0 +1,80 @@
+#include <iostream>
+#include <string>
+#include <numeric>
+
+
+void align(std::string& array1, int& len1, std::string& array2, int& len2) {
+    // Определяем новую длину для обоих массивов
+    int new_len = std::max(len1, len2) + 1;
+
+    while (array1.length() < new_len) {
+        array1 = '0' + array1;
+    }
+    while (array2.length() < new_len) {
+        array2 = '0' + array2;
+    }
+
+    len1 = len2 = new_len;
+}
+
+
+void add(std::string& array1, std::string& array2) {
+    int len = array1.length();
+    std::string new_array1(len, '0');
+    std::string new_array2(len, '0');
+    new_array2[len - 1] = '0';
+    for (int i = len - 1; i >= 0; i--) {
+        int sum = (array1[i] - '0') + (array2[i] - '0');
+        new_array1[i] = (sum % 10) + '0';
+        if (i > 0) {
+            new_array2[i - 1] = (sum / 10) + '0';
+        }
+    }
+    array1 = new_array1;
+    array2 = new_array2;
+}
+
+
+std::string plus(std::string& num1, std::string& num2) {
+    int num1_len, num2_len;
+    num1_len = num1.length(); // длина 1-го числа
+    num2_len = num2.length(); // длина 2-го числа
+    
+    // "Выравнивание чисел"
+    align(num1, num1_len, num2, num2_len);
+
+    int sum;// Сумма элементов второго числа (для проверки на окончание сложения)
+    for (int i = 0; i < num2_len; i++) {
+        sum = sum + (num2[i] - '0');
+    }
+    
+    while (sum != 0) {
+        sum = 0;
+        add(num1, num2);
+        
+        // Пересчитываем сумму цифр во втором числе
+        for (int i = 0; i < num2_len; i++) {
+            sum = sum + (num2[i] - '0');
+        }
+    }
+    
+    return num1;
+}
+
+int main() {
+    std::string num1, num2;
+
+    std::cout << "Введите первое число: ";
+    std::cin >> num1;
+
+    std::cout << "Введите второе число: ";
+    std::cin >> num2;
+
+    std::string result = plus(num1, num2);
+    std::cout << "Результат сложения: " << result << std::endl;
+
+    return 0;
+}
+
+
+
