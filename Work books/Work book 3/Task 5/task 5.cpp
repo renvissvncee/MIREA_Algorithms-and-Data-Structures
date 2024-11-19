@@ -2,6 +2,7 @@
 #include <string>
 #include <numeric>
 #include <cmath>
+#include <ctime>
 
 int* create_number(std::string s) {
     int* num = new int[s.length()];
@@ -203,23 +204,48 @@ std::string mult(const std::string& num1, const std::string& num2) {
     }
 }
 
+std::string column_mult(std::string array1, std::string array2) {
+    int len = array1.length();
+
+    std::string s(len*2, '0');
+
+    for (int i = len - 1; i >= 0; i--) {
+
+        std::string inter(len + (len - i - 1), '0');
+        
+        int k = array2[i] - '0';
+        int p = 0;  
+        for (int j = len - 1; j >= 0; j--) {
+            inter[j] = ((p + (array1[j] - '0')*k) % 10) + '0';
+            p = (p + (array1[j] - '0')*k) / 10;
+        }
+        s = plus(s, inter);
+    }
+    return s;
+}
 
 int main() {
     std::string s;
     // Создание первого числа
     std::cout << "Введите первое число: ";
     std::cin >> s;
-    std::string num1_k = s;
+    std::string num1 = s;
+    int num1_len = num1.length();
     
     // Второго
     std::cout << "Введите второе число: ";
     std::cin >> s;
-    std::string num2_k = s;
+    std::string num2 = s;
+    int num2_len = num2.length();
 
-    std::cout << "Карацуба: " << mult(num1_k,num2_k) << std::endl;
-    
-
-
-
+    unsigned int start_time_1 =  clock();
+    std::cout << "Карацуба: " << mult(num1,num2) << " | Время работы: ";
+    unsigned int end_time_1 = clock(); // конечное время
+    std::cout << end_time_1 - start_time_1 << std::endl;
+    align(num1, num1_len, num2, num2_len);
+    unsigned int start_time_2 =  clock();
+    std::cout << "Столбик: " << column_mult(num1,num2) << " | Время работы: ";
+    unsigned int end_time_2 = clock(); // конечное время
+    std::cout << end_time_2 - start_time_2 << std::endl;
     return 0;
 }
