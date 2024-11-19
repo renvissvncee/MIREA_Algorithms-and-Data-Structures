@@ -1,6 +1,17 @@
 #include <iostream>
 #include <string>
+#include <numeric>
 #include <cmath>
+
+int* create_number(std::string s) {
+    int* num = new int[s.length()];
+    for (int i = 0; i < s.length(); i++) {
+        char ch = s[i];
+        num[i] = ch - '0';
+    }
+    return num;
+}
+
 
 std::string remove(const std::string& num) {
     std::string str;
@@ -194,9 +205,21 @@ std::string mult(const std::string& num1, const std::string& num2) {
 
 
 int main() {
-    std::string num1 = "3765411241", A,B,C,D,X1,X2, num2 = "65642114";
-    std::cout << mult(num1,num2);
+    std::string s;
+    // Создание первого числа
+    std::cout << "Введите первое число: ";
+    std::cin >> s;
+    std::string num1_k = s;
     
+    // Второго
+    std::cout << "Введите второе число: ";
+    std::cin >> s;
+    std::string num2_k = s;
+
+    std::cout << "Карацуба: " << mult(num1_k,num2_k) << std::endl;
+    
+
+
 
     return 0;
 }
