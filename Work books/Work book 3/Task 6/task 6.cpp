@@ -31,7 +31,15 @@ int main() {
             R = mid;
         }
     }
-    std::cout << L << std::endl;
-
+    int q, r;
+    if (f(A,B, floor(L)) < B) {
+        q = floor(L);
+        r = f(A, B, q);
+    }
+    else {
+        q = ceil(L);
+        r = f(A, B, q);
+    }
+    std::cout << q << " " << r;
     return 0;
 }
