@@ -242,10 +242,13 @@ int main() {
     std::cout << "Карацуба: " << mult(num1,num2) << " | Время работы: ";
     unsigned int end_time_1 = clock(); // конечное время
     std::cout << end_time_1 - start_time_1 << std::endl;
+    int kar = end_time_1 - start_time_1;
     align(num1, num1_len, num2, num2_len);
     unsigned int start_time_2 =  clock();
     std::cout << "Столбик: " << column_mult(num1,num2) << " | Время работы: ";
     unsigned int end_time_2 = clock(); // конечное время
     std::cout << end_time_2 - start_time_2 << std::endl;
+    int stol = end_time_2 - start_time_2;
+    std::cout << "Время Карацубы: " << kar << std::endl << "Время столбиком: " << stol;
     return 0;
 }
