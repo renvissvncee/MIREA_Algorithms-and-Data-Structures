@@ -71,12 +71,15 @@ void add_begin(Node*& Arr, int key) {
     Arr = new_node;
 }
 
-void add_last(Node* Arr, int key) {
-    Node* curr_element = Arr;
-    while (curr_element->next != nullptr) {
-        curr_element = curr_element->next;
+void add_last(Node*& Arr, int key) {
+    if (Arr == nullptr) {add_begin(Arr, key);}
+    else {
+        Node* curr_element = Arr;
+        while (curr_element->next != nullptr) {
+            curr_element = curr_element->next;
+        }
+        curr_element->next = newNode(key, nullptr);
     }
-    curr_element->next = newNode(key, nullptr);
 }
 
 int QuantityOfList(Node* List) {
@@ -147,17 +150,119 @@ bool is_include(Node* List1, Node* List2) {
     return 1;
 }
 
+bool TwoIdentical(Node* List) {
+    Node* curr_element = List;
+    while (curr_element) {
+        Node* temp_element = curr_element->next;
+        while(temp_element) {
+            if (temp_element->key == curr_element->key) {
+                return 1;
+            }
+            temp_element = temp_element->next;
+        }
+        if (curr_element->next->next) {curr_element = curr_element->next;}
+        else {return 0;}
+    }
+    return 0;
+}
+
+void FirstToEnd(Node*& List) {
+    Node* first_element = newNode(List->key, nullptr);
+    Node* second_element = List->next;
+    Node* curr_element = List;
+    while (curr_element->next) {
+        curr_element = curr_element->next;
+    }
+    curr_element->next = first_element;
+    List = second_element;
+}
+
+void LastToBegin(Node*& Last) {
+    Node* curr_element = Last;
+    while (curr_element->next->next) {
+        curr_element = curr_element->next;
+    }
+    Node* last_element = newNode(curr_element->next->key, Last);
+    curr_element->next = nullptr;
+    Last = last_element;
+}
+
+void MergeLists(Node* List1, Node* List2) {
+    Node* curr_element = List1;
+    while (curr_element->next) {
+        curr_element = curr_element->next;
+    }
+    curr_element->next = List2;
+}
+
+void ListReverse(Node*& List) {
+    Node* temp_element = List->next->next;
+    Node* curr_element = List->next;
+    Node* prev_element = List;
+    List->next = nullptr;
+    while (temp_element->next) {
+        curr_element->next = prev_element;
+        prev_element = curr_element;
+        curr_element = temp_element;
+        temp_element = curr_element->next;
+    }
+    curr_element->next = prev_element;
+    temp_element->next = curr_element;
+    List = temp_element;
+}
+
+Node* NoRepeat(Node* List) {
+    Node* Arr = new Node; 
+    Arr = constructList(0);
+    add_last(Arr, List->key);
+
+    Node* curr_element = List->next;
+    while(curr_element) {
+        bool flag = 1;
+        int curr_key = curr_element->key;
+
+        Node* temp_element = Arr;
+        while (temp_element) {
+            int temp_key = temp_element->key;
+            if (temp_key == curr_key) {
+                flag = 0;
+                break;
+            }
+            temp_element = temp_element->next;
+        }
+
+        if (flag == 1) {
+            add_last(Arr, curr_key);
+        }
+
+        curr_element = curr_element->next;
+    }
+    return Arr;
+}
+
+void Shift(Node*& List, int n, char ch) {
+    if (ch == 'l') {
+        for (int i = 0; i < n; i++) {
+            FirstToEnd(List);
+        }
+    }
+    else {
+        for (int i = 0; i < n; i++) {
+            LastToBegin(List);
+        }
+    }
+}
+
 int main() {
     Node* List1 = new Node;
     Node* List2 = new Node;
     List1 = constructList(0);
-    List2 = constructList(0);
-    add_begin(List1, 1);
-    add_begin(List1, 2);
-    add_begin(List2, 2);
-    add_begin(List2, 0);
+    add_last(List1, 2);
+    add_last(List1, 3);
+    add_last(List1, 4);
+    add_last(List1, 5);
     PrintList(List1);
-    PrintList(List2);
-    std::cout << is_include(List1, List2);
+    Shift(List1, 3, 'r');
+    PrintList(List1);
 
 }
