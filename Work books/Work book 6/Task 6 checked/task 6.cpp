@@ -71,12 +71,15 @@ void add_begin(Node*& Arr, int key) {
     Arr = new_node;
 }
 
-void add_last(Node* Arr, int key) {
-    Node* curr_element = Arr;
-    while (curr_element->next != nullptr) {
-        curr_element = curr_element->next;
+void add_last(Node*& Arr, int key) {
+    if (Arr == nullptr) {add_begin(Arr, key);}
+    else {
+        Node* curr_element = Arr;
+        while (curr_element->next != nullptr) {
+            curr_element = curr_element->next;
+        }
+        curr_element->next = newNode(key, nullptr);
     }
-    curr_element->next = newNode(key, nullptr);
 }
 
 int QuantityOfList(Node* List) {
@@ -90,9 +93,28 @@ int QuantityOfList(Node* List) {
 }
     
 Node* ExceptFirst(Node* List) {
+    if (List == nullptr) {return nullptr;}
     return List->next;
 }
 
 int main() {
-    
+    Node* emptyList = constructList(0);
+    Node* List = constructList(7);
+    std::cout << "Проверка на пустоту\n";
+    std::cout << is_empty(emptyList) << " " << is_empty(List) << std::endl;
+
+    std::cout << "Добавление в список\n";
+    add_begin(List, 0);
+    PrintList(List);
+    add_last(List, 0);
+    PrintList(List);
+    add_middle(List, 4, 0);
+    PrintList(List);
+
+    std::cout << "Кол-во элементов в списке\n";
+    std::cout << QuantityOfList(emptyList) << " " << QuantityOfList(List) << std::endl;
+
+    std::cout << "Список кроме первого\n";
+    PrintList(ExceptFirst(List));
+    PrintList(ExceptFirst(emptyList));
 }

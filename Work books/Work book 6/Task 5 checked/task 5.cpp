@@ -16,14 +16,20 @@ int main() {
         //std::cout << Arr[i] << " ";
     //}
 
-    for (int i = 1; i < len; i++) {
+    int i = 1;
+    while (i < len) {
         if (Arr[i] > Arr[i - 1]) {
-            std::cout << "Неупорядоченный по убыванию";
             break;
         }
-        else if (i == len - 1 && Arr[i] < Arr[i - 1]) {
-            std::cout << "Упорядоченный по убыванию";
-        }
+        i++;
     }
+
+    if (i == len) {
+        std::cout << "Упорядоченный по убыванию";
+    }
+    else {
+        std::cout << "Не упорядоченный по убыванию";
+    }
+
     return 0;
 }

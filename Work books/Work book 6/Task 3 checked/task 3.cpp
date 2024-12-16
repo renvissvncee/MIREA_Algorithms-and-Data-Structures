@@ -1,12 +1,15 @@
 #include <iostream>
 
 int main() {
-    int len = rand() % 10000;
+    int len;
+    std::cout << "Введите длину: ";
+    std::cin >> len;
     int Arr[len];
     int count_two = 0, count_three = 0;
-
+    
+    std::cout << "Введите элементы массива: ";
     for (int i = 0; i < len; i++) {
-        Arr[i] = rand();
+        std::cin >> Arr[i];
     }
 
     for (int i = 0; i < len - 1; i++) {

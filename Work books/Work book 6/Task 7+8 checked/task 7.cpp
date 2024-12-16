@@ -116,38 +116,34 @@ bool is_equal(Node* List1, Node* List2) {
 }
 
 bool is_include(Node* List1, Node* List2) {
-    Node* curr_element1 = new Node;
-    Node* curr_element2 = new Node;
+    Node* curr_element1 = List1;
+    Node* curr_element2 = List2;
     if (QuantityOfList(List1) > QuantityOfList(List2)) {
-        curr_element1 = List2;
-        curr_element2 = List1;
+        return 0;
     }
     else {
-        curr_element1 = List1;
-        curr_element2 = List2;
-    }
-
-    while (curr_element1) {
-        int key = curr_element1->key;
-        Node* temp_element = curr_element2;
-        while (temp_element) {
-            if (key == temp_element->key) {
-                break;
+        while (curr_element1) {
+            int key = curr_element1->key;
+            Node* temp_element = curr_element2;
+            while (temp_element) {
+                if (key == temp_element->key) {
+                    break;
+                }
+                if (temp_element->next) {
+                    temp_element = temp_element->next;
+                }
+                else {break;}
             }
-            if (temp_element->next) {
-                temp_element = temp_element->next;
+            if (temp_element->key != key) {
+                return 0;
+            }
+            if (curr_element1->next) {
+                curr_element1 = curr_element1->next;
             }
             else {break;}
         }
-        if (temp_element->key != key) {
-            return 0;
-        }
-        if (curr_element1->next) {
-            curr_element1 = curr_element1->next;
-        }
-        else {break;}
+        return 1;
     }
-    return 1;
 }
 
 bool TwoIdentical(Node* List) {
@@ -188,11 +184,18 @@ void LastToBegin(Node*& Last) {
 }
 
 void MergeLists(Node* List1, Node* List2) {
-    Node* curr_element = List1;
+    Node* curr_element = List2;
+    Node* addList = constructList(0);
+    while (curr_element->next) {
+        add_last(addList, curr_element->key);
+        curr_element = curr_element->next;
+    }
+    add_last(addList, curr_element->key);
+    curr_element = List1;
     while (curr_element->next) {
         curr_element = curr_element->next;
     }
-    curr_element->next = List2;
+    curr_element->next = addList;
 }
 
 void ListReverse(Node*& List) {
@@ -254,15 +257,76 @@ void Shift(Node*& List, int n, char ch) {
 }
 
 int main() {
-    Node* List1 = new Node;
-    Node* List2 = new Node;
-    List1 = constructList(0);
-    add_last(List1, 2);
-    add_last(List1, 3);
-    add_last(List1, 4);
-    add_last(List1, 5);
-    PrintList(List1);
-    Shift(List1, 3, 'r');
-    PrintList(List1);
+    Node* List1 = constructList(0);;
+    Node* List2 = constructList(0);
+    Node* List3 = constructList(0);
 
+    for (int i = 0; i < 5; i++) {
+        add_begin(List1, i);
+        add_begin(List2, i);
+        add_begin(List3, i);
+    }
+    add_begin(List3, rand());
+    std::cout << "Списки:\n";
+    PrintList(List1);
+    PrintList(List2);
+    PrintList(List3);
+    std::cout << std::endl;
+
+    std::cout << "Проверка на равенство\n";
+    std::cout << is_equal(List1, List2) << " " << is_equal(List1, List3) << "\n\n";
+
+    std::cout << "Проверка на вхождение\n";
+    std::cout << is_include(List1, List2) << " " << is_include(List1, List3) << " " << is_include(List3, List1) << "\n\n";
+
+    add_begin(List2, 0);
+    std::cout << "Есть ли одинаковые элементы \n";
+    std::cout << TwoIdentical(List1) << " " << TwoIdentical(List2) << "\n\n";
+
+    std::cout << "Списки:\n";
+    PrintList(List1);
+    PrintList(List2);
+    PrintList(List3);
+    std::cout << std::endl;
+
+    std::cout << "Первый в конец\n";
+    FirstToEnd(List1);
+    PrintList(List1);
+    std::cout << std::endl;
+
+    std::cout << "Последний в начало\n";
+    LastToBegin(List1);
+    PrintList(List1);
+    std::cout << std::endl;
+
+    std::cout << "Добавление к списку List1 списка List2\n";
+    MergeLists(List1, List2);
+    PrintList(List1);
+    std::cout << std::endl;
+
+    std::cout << "Перевернутые списки\n";
+    ListReverse(List1);
+    ListReverse(List2);
+    PrintList(List1);
+    PrintList(List2);
+    std::cout << std::endl;
+
+    std::cout << "Только первые вхождения\n";
+    PrintList(NoRepeat(List1));
+    PrintList(NoRepeat(List2));
+    PrintList(NoRepeat(List3));
+    std::cout << std::endl;
+
+    std::cout << "Списки:\n";
+    PrintList(List1);
+    PrintList(List2);
+    PrintList(List3);
+    std::cout << std::endl;
+
+    std::cout << "Циклический сдвиг\n";
+    Shift(List2, 2, 'l');
+    Shift(List3, 2, 'r');
+    PrintList(List2);
+    PrintList(List3);
+    std::cout << std::endl;
 }

@@ -16,17 +16,18 @@ Node* newNode(int key) {
 }
 
 Node* constructList(int n) {
-    std::srand(std::time(0));
+    std::srand(time(0));
+    if (n == 0) {
+        Node* head = nullptr;
+        return head;
+    }
     Node* head = newNode(rand());
     Node* last = head;
-    
-    
-    for (int i = 0; i < n - 2; i++) {
+    for (int i = 0; i < n - 1; i++) {
         Node* new_node = newNode(rand());
         last->next = new_node;
         last = new_node;
     }
-
     return head;
 }
 
@@ -39,7 +40,7 @@ void PrintList(Node* head) {
 }
     
 int main() {
-    std::srand(std::time(0));
+    srand(time(0));
     int len = rand();
     Node* List = constructList(len);
 

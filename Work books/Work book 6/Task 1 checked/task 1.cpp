@@ -1,8 +1,9 @@
 #include <iostream>
 #include <cmath>
+#include <ctime>
 
-long int fact(long int x) {
-    if (x == 1) {
+int fact(int x) {
+    if (x < 2) {
         return 1;
     }
     return fact(x - 1) * x;
@@ -19,14 +20,12 @@ int square(int x) {
 }
 
 int main() {
-    int n, count = 0;
-    std::cout << "Введите размер массива: ";
-    std::cin >> n;
+    srand(time(0));
+    int n = rand() % 10000, count = 0;
     int* Arr = new int[n];
 
-    std::cout << "Введите элементы массива: ";
     for (int i = 0; i < n; i++) {
-        std::cin >> Arr[i];
+        Arr[i] = rand() % 32000;
     }
 
     // Нечетные
@@ -64,7 +63,17 @@ int main() {
     count = 0;
     std::cout << "Кол-во чисел, удовлетворяющих 1-ому условию: ";
     for (int i = 0; i < n; i++) {
-        if (pow(2, i) < Arr[i] && Arr[i] < fact(i)) {
+        if ((pow(2, i) < Arr[i]) && (Arr[i] < fact(i))) {
+            count++;
+        }
+    }
+    std::cout << count << std::endl;
+
+    // Второе условие
+    count = 0;
+    std::cout << "Кол-во чисел, удовлетворяющих 2-ому условию: ";
+    for (int i = 0; i < n; i++) {
+        if (2 * Arr[i] < (Arr[i - 1] + Arr[i + 1])) {
             count++;
         }
     }

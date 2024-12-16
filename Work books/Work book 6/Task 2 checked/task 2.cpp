@@ -1,6 +1,8 @@
 #include <iostream>
+#include <ctime>
 
 int main() {
+    srand(time(0));
     int len = rand() % 10000;
     int count = 0, sum = 0;
     int Arr[len];
