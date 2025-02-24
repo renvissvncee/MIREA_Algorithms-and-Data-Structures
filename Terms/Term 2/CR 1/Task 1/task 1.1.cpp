@@ -12,6 +12,7 @@ void append(Node** head, int new_data) {
     new_node->data = new_data;
     new_node->next = nullptr;
 
+    // Если список пустой
     if (*head == nullptr) {
         new_node->prev = nullptr;
         *head = new_node;
@@ -33,20 +34,31 @@ bool is_break(Node* list) {
     Node* element1 = list;
     Node* element2 = list->next;
 
-    while (element2->next != nullptr) {
+    while (element2 != nullptr && element2->next != nullptr) {
         // Если случится так, что предыдущий от element2 элемент указывает не на
         // element1, значит, произошел перескок
         if (element1 != element2->prev) {
-            return false;
+            return true;
         }
         element1 = element1->next;
         element2 = element2->next;
     }
-    return true;
+    return false;
 }
 
 int main() {
-    Node* list = NULL;
-    append(&list, 3);
+    Node* break_list = NULL;
+    for (int i = 1; i < 6; i++) {
+        append(&break_list, i);
+    }
+
+    // Проверим на "сломанность":
+    std::cout << "Изначальный список сломан?: " << is_break(break_list) << "\n";
+
+    // Сделаем так, чтобы 3 элемент указывал вперед не на 4-ый, а на 1-ый
+    Node* broke_element = break_list->next->next->next;
+    broke_element->next = break_list;
+    std::cout << "Измененный список сломан?: " << is_break(break_list);
+    
     return 0;
 }

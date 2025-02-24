@@ -35,27 +35,26 @@ void display_list(Node* list) {
 }
 
 std::pair<Node*, Node*> list_split(Node* list, int sep) {
-    // Есть 3 указателя: первый указывает на элемент исходного списка, который мы рассматриваем
+    // Есть 3 указателя: первый (list) указывает на элемент исходного списка, который мы рассматриваем
     // Второй будет указывать на начало списка, в котором все числа меньше sep
     // Второй будет указывать на начало списка, в котором все числа больше либо равны sep
-    Node* temp_list = list;
     Node* new_list1 = nullptr;
     Node* new_list2 = nullptr;
 
-    while (temp_list != nullptr) {
+    while (list != nullptr) {
         // Каждый раз, "рассматривая" новый элемент исходного списка, будем создавать указатель
         // на этот элемент для того, чтобы после копирования значения исходного элемента в 
         // один из новых списков, удалить этот элемент в исходном списке.
-        Node* temp_element = temp_list;
-        if (temp_list->data < sep) {
-            append(&new_list1, temp_list->data);
+        Node* temp_element = list;
+        if (list->data < sep) {
+            append(&new_list1, list->data);
         }
         else {
-            append(&new_list2, temp_list->data);
+            append(&new_list2, list->data);
         }
 
         // Переходим "рассматривать" следующий элемент
-        temp_list = temp_list->next;
+        list = list->next;
         // и удаляем прошлый
         delete temp_element;
     }
@@ -69,13 +68,17 @@ int main() {
         append(&list, i);
     }
     
+    std::cout << "Список: " << "\n";
     display_list(list);
 
-    std::pair<Node*, Node*> pair_of_lists = list_split(list, 10);
-    std::cout << std::endl;
+    int X;
+    std::cout << "\nВведите разделитель: ";
+    std::cin >> X;
+
+    std::pair<Node*, Node*> pair_of_lists = list_split(list, X);
     display_list(pair_of_lists.first);
     std::cout << std::endl;
     display_list(pair_of_lists.second);
-    
+
     return 0;
 }

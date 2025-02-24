@@ -4,7 +4,7 @@ struct Node {
     int data;
     Node* next;
     Node* prev;
-    bool last;
+    bool last; // Проверка на то, что элемент - последний
 };
 
 void append(Node** head, int new_data) {
@@ -46,12 +46,15 @@ void display_list(Node* list) {
     }
 }
 
+// Удаление узла по значению
 void delete_element(Node* list, int value) {
+    // Доходим до нужного узла
     Node* element = list;
     while (element->data != value) {
         element = element->next;
     }
     
+    // Меняем поле next предыдущего узла на следующий после найденного элемента узел
     element->prev->next = element->next;
     if (element->last == 1) {
         element->prev->last = 1;
@@ -62,6 +65,7 @@ void delete_element(Node* list, int value) {
 bool is_circular(Node* list) {
     Node* first_element = list;
     Node* last_element = list;
+
     while (last_element->last == 0 && last_element->next) {
         last_element = last_element->next;
     } 
@@ -77,6 +81,8 @@ int main() {
     append(&list,3);
     append(&list,4);
     display_list(list);
+
+    
     delete_element(list, 2);
     display_list(list);
 
