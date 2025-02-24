@@ -3,6 +3,7 @@
 struct Node {
     int data;
     Node* next;
+    Node* prev;
 };
 
 void append(Node** head, int new_data) {
@@ -11,7 +12,8 @@ void append(Node** head, int new_data) {
     new_node->data = new_data;
     new_node->next = nullptr;
 
-    if (*head = nullptr) {
+    if (*head == nullptr) {
+        new_node->prev = nullptr;
         *head = new_node;
         return;
     }
@@ -21,10 +23,11 @@ void append(Node** head, int new_data) {
         last = last->next;
     }
     last->next = new_node;
+    new_node->prev = last;
 }
 
 bool is_break(Node* list) {
-    if (list == nullptr) {return false;} 
+    if (list == nullptr || list->next = nullptr) {return false;} 
     // Создаем два указателя, один из которых за одну итерацию переходит в следующий
     // элемент (т.е. медленный), а другой переходит сразу 2 элемента, а не один
     // (т.е. быстрый). Если в списке будет "перескок", то эти указатели войдут в цикл
