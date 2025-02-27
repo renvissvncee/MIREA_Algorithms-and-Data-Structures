@@ -72,6 +72,7 @@ bool is_circular(Node* list) {
     if (last_element->next == first_element && first_element->prev == last_element) {
         return true;
     }
+    return false;
 }
 
 int main() {

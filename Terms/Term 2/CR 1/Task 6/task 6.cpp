@@ -52,7 +52,7 @@ int height(Node* tree, int c) {
     else {return c - 1;}
 }
 
-bool search(Node* tree, int value) {
+Node* search(Node* tree, int value) {
     if (tree) {
         // Если элемент больше данного узла, то проверяем его наличие той же функцией, но уже
         // в правом поддереве
@@ -63,14 +63,18 @@ bool search(Node* tree, int value) {
             return search(tree->left, value);
         }
         else {
-            return true;
+            return tree;
         }
     }
     // Если так вышло, что при таком обходе дерева мы дошли до несуществующего узла,
     // значит, такого элемента нет
-    else {return false;}
+    else {
+        return nullptr;
+    }
 }
 
+
+// Поиск максимального узла в дереве
 Node* max_node(Node* tree) {
     if (!tree->left && !tree->right) {return tree;}
     else if (tree->left && !tree->right) {return max_node(tree->left);}
@@ -161,6 +165,7 @@ void delete_node(Node* tree, int value) {
 }
 
 int main() {
+    // Создадим дерево
     Node* tree = nullptr;
     insertNode(&tree, 4);
     insertNode(&tree, 3);
@@ -171,7 +176,17 @@ int main() {
     insertNode(&tree, 7);
     preorder(tree);
     std::cout << std::endl;
+
+    std::cout << "Высота дерева: " << height(tree, 1) << "\n";
+
+    std::cout << "Узел с нормером 5: " << search(tree, 5) << " - " << search(tree, 5)->data << "\n";
+    std::cout << "Узел с нормером 7: " << search(tree, 5) << " - " << search(tree, 7)->data << "\n";
+
+    // Удалим элементы дерева
     delete_node(tree, 6);
+    preorder(tree);
+    delete_node(tree, 3);
+    std::cout << "\n";
     preorder(tree);
     return 0;
 }
