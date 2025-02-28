@@ -76,6 +76,7 @@ bool is_circular(Node* list) {
 }
 
 int main() {
+    std::cout << "Список:\n";
     Node* list = nullptr;
     append(&list,1);
     append(&list,2);
@@ -83,10 +84,11 @@ int main() {
     append(&list,4);
     display_list(list);
 
-    
+    std::cout << "Удалим элемент 2:\n";
     delete_element(list, 2);
     display_list(list);
 
+    std::cout << "Список цикличен?: ";
     std::cout << is_circular(list);
     return 0;
 }

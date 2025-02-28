@@ -166,6 +166,7 @@ void delete_node(Node* tree, int value) {
 
 int main() {
     // Создадим дерево
+    std::cout << "Дерево:\n";
     Node* tree = nullptr;
     insertNode(&tree, 4);
     insertNode(&tree, 3);
@@ -183,10 +184,12 @@ int main() {
     std::cout << "Узел с нормером 7: " << search(tree, 5) << " - " << search(tree, 7)->data << "\n";
 
     // Удалим элементы дерева
+    std::cout << "Удалим элемент 6:\n";
     delete_node(tree, 6);
     preorder(tree);
     delete_node(tree, 3);
     std::cout << "\n";
+    std::cout << "Удалим элемент 3:\n";
     preorder(tree);
     return 0;
 }

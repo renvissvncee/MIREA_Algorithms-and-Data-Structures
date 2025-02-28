@@ -41,8 +41,15 @@ void display(Node* root) {
 }
 
 int main() {
-    Node* tree = buildTree(1, 6);
+    int b, r, X;
+    std::cout << "Введите начало и конец интервала: ";
+    std::cin >> b >> r;
+    std::cout << "Построим дерево:\n";
+    Node* tree = buildTree(b, r);
     display(tree);
-    std::cout << "\n" << count(tree, 2);
+    std::cout << "\nВведите точку X, которую нужно подсчитать: ";
+    std::cin >> X;
+    std::cout << "Кол-во точек X: ";
+    std::cout << count(tree, X);
     return 0;
 }

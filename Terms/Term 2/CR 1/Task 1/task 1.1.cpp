@@ -46,18 +46,33 @@ bool is_break(Node* list) {
     return false;
 }
 
+void display_list(Node* list) {
+    while (list != nullptr) {
+        std::cout << list->data;
+        list = list->next;
+
+        if (list != nullptr) {
+            std::cout << " -> ";
+        }
+    }
+}
+
 int main() {
     Node* break_list = NULL;
     for (int i = 1; i < 6; i++) {
         append(&break_list, i);
     }
 
+    std::cout << "Список:\n";
+    display_list(break_list);
+
     // Проверим на "сломанность":
-    std::cout << "Изначальный список сломан?: " << is_break(break_list) << "\n";
+    std::cout << "\nИзначальный список сломан?: " << is_break(break_list) << "\n\n";
 
     // Сделаем так, чтобы 3 элемент указывал вперед не на 4-ый, а на 1-ый
     Node* broke_element = break_list->next->next->next;
     broke_element->next = break_list;
+    
     std::cout << "Измененный список сломан?: " << is_break(break_list);
     
     return 0;
